@@ -3,147 +3,318 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The ICT Machine | Smart Money Concepts Indicator</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>The ICT Machine | Institutional Trading Indicator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #050505; --surface: #0f0f13; --border: #27272a;
-  --text: #f4f4f5; --muted: #a1a1aa; 
-  --green: #10b981; --red: #ef4444; --blue: #3b82f6;
+  --bg: #070B14;
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-glow: rgba(0, 240, 255, 0.3);
+  --text: #F8FAFC;
+  --muted: #94A3B8;
+  --cyan: #00F0FF;
+  --purple: #8B5CF6;
+  --green: #10B981;
+  --red: #EF4444;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Background Glow */
+.glow-bg { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100vw; height: 100vh; background: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 60%, rgba(139, 92, 246, 0.1) 0%, transparent 40%); z-index: -1; pointer-events: none; }
 
 /* Nav */
-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 5%; border-bottom: 1px solid var(--border); background: rgba(5,5,5,0.9); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
-.logo { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-.logo span { color: var(--green); }
-.btn { background: var(--green); color: #000; padding: 10px 24px; border-radius: 6px; font-weight: 700; text-decoration: none; transition: 0.2s; border: none; cursor: pointer; }
-.btn:hover { background: #34d399; transform: translateY(-1px); }
+nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 5%; border-bottom: 1px solid var(--border); background: rgba(7, 11, 20, 0.8); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+.logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; }
+.logo-mark { width: 24px; height: 24px; background: linear-gradient(135deg, var(--cyan), var(--purple)); border-radius: 6px; }
+.nav-links { display: flex; gap: 32px; font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+.nav-links a { text-decoration: none; color: inherit; transition: 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.btn { background: var(--text); color: var(--bg); padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: 0.2s; border: none; cursor: pointer; }
+.btn:hover { background: var(--cyan); color: #000; box-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
 
 /* Hero */
-.hero { text-align: center; padding: 100px 5% 60px; max-width: 900px; margin: 0 auto; position: relative; }
-.hero::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%); z-index: -1; pointer-events: none; }
-.badge { display: inline-block; background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.2); padding: 6px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 600; margin-bottom: 24px; }
-.hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 24px; font-weight: 800; }
+.hero { text-align: center; padding: 120px 5% 80px; max-width: 900px; margin: 0 auto; }
+.badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 240, 255, 0.1); color: var(--cyan); border: 1px solid rgba(0, 240, 255, 0.2); padding: 6px 16px; border-radius: 99px; font-size: 0.85rem; font-weight: 600; margin-bottom: 32px; font-family: 'JetBrains Mono', monospace; }
+.pulse-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; box-shadow: 0 0 10px var(--cyan); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+.hero h1 { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px; font-weight: 700; }
+.hero h1 span { background: linear-gradient(to right, var(--cyan), var(--purple)); -webkit-background-clip: text; color: transparent; }
 .hero p { font-size: 1.15rem; color: var(--muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
-.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-.btn-secondary:hover { background: var(--border); }
 
-/* Chart Mockup */
-.chart-container { max-width: 1000px; margin: 60px auto; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-.chart-header { display: flex; justify-content: space-between; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-.chart-svg { width: 100%; height: 350px; display: block; }
+/* Chart Container */
+.chart-wrapper { max-width: 1100px; margin: 0 auto; padding: 0 5% 100px; }
+.chart-container { background: #0D1117; border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 30px 100px -20px rgba(0,0,0,0.8), 0 0 40px rgba(0, 240, 255, 0.05); position: relative; overflow: hidden; }
+.chart-header { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+.chart-svg { width: 100%; height: 450px; display: block; }
 
-/* Features */
-.features { padding: 80px 5%; background: #08080a; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1100px; margin: 0 auto; }
-.feature { background: var(--surface); border: 1px solid var(--border); padding: 32px; border-radius: 12px; transition: 0.3s; }
-.feature:hover { border-color: var(--green); transform: translateY(-4px); }
-.feature-icon { font-size: 1.5rem; margin-bottom: 16px; }
-.feature h3 { font-size: 1.2rem; margin-bottom: 12px; }
-.feature p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+/* Bento Features */
+.features { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+.section-title { text-align: center; margin-bottom: 60px; }
+.section-title h2 { font-size: 2.5rem; margin-bottom: 16px; letter-spacing: -0.02em; }
+.section-title p { color: var(--muted); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
+.bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.bento-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; transition: 0.3s; position: relative; overflow: hidden; }
+.bento-card:hover { background: var(--surface-hover); border-color: var(--border-glow); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+.bento-card.large { grid-column: span 2; }
+.bento-card.full { grid-column: span 3; }
+.bento-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.05); border-radius: 12px; display: grid; place-items: center; font-size: 1.5rem; margin-bottom: 24px; border: 1px solid var(--border); }
+.bento-card h3 { font-size: 1.3rem; margin-bottom: 12px; }
+.bento-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
 
-/* Footer */
+/* Pricing */
+.pricing { padding: 100px 5%; background: linear-gradient(180deg, transparent, rgba(0,240,255,0.02)); }
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 1000px; margin: 60px auto 0; }
+.price-card { background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; position: relative; }
+.price-card.featured { border-color: var(--cyan); box-shadow: 0 0 40px rgba(0,240,255,0.1); background: rgba(0,240,255,0.02); }
+.popular-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--cyan); color: #000; font-weight: 700; font-size: 0.75rem; padding: 4px 16px; border-radius: 99px; letter-spacing: 0.05em; }
+.price-card h3 { font-size: 1.2rem; color: var(--muted); margin-bottom: 16px; }
+.price { font-size: 3.5rem; font-family: 'Space Grotesk', sans-serif; font-weight: 700; margin-bottom: 8px; }
+.price span { font-size: 1rem; color: var(--muted); font-family: 'Inter', sans-serif; font-weight: 400; }
+.price-card ul { list-style: none; text-align: left; margin: 32px 0; display: flex; flex-direction: column; gap: 16px; }
+.price-card li { color: var(--muted); font-size: 0.95rem; display: flex; align-items: center; gap: 12px; }
+.price-card li::before { content: "✓"; color: var(--cyan); font-weight: bold; }
+.price-btn { display: block; width: 100%; padding: 16px; border-radius: 12px; font-weight: 600; text-decoration: none; transition: 0.2s; background: var(--surface-hover); color: var(--text); border: 1px solid var(--border); }
+.price-card.featured .price-btn { background: var(--cyan); color: #000; border: none; }
+.price-card.featured .price-btn:hover { background: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+
 footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card.large, .bento-card.full { grid-column: span 1; }
+  .chart-svg { height: 300px; }
+}
 </style>
 </head>
 <body>
+<div class="glow-bg"></div>
 
 <nav>
-  <div class="logo"><span>■</span> The ICT Machine</div>
+  <div class="logo"><div class="logo-mark"></div> ICT Machine</div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#docs">Documentation</a>
+  </div>
   <a href="#pricing" class="btn">Get Access</a>
 </nav>
 
 <section class="hero">
-  <div class="badge">v0.99 Now Live on TradingView</div>
-  <h1>Stop guessing. <br>Trade with the machine.</h1>
-  <p>The ultimate Smart Money Concepts indicator. Automatically maps Fair Value Gaps, Market Structure Shifts, and Liquidity Sweeps so you can execute with institutional precision.</p>
-  <div class="hero-actions">
-    <a href="#pricing" class="btn">Start Free Trial</a>
-    <a href="#features" class="btn btn-secondary">See How It Works</a>
-  </div>
+  <div class="badge"><div class="pulse-dot"></div> V0.99 Live on TradingView</div>
+  <h1>Trade with <span>Institutional Precision.</span></h1>
+  <p>Stop drawing lines manually. The ICT Machine automatically maps Fair Value Gaps, Market Structure Shifts, and Liquidity Sweeps in real-time.</p>
+  <a href="#pricing" class="btn" style="padding: 16px 32px; font-size: 1rem;">Start 7-Day Free Trial</a>
 </section>
 
-<div class="chart-container">
-  <div class="chart-header">
-    <span>EURGBP · 15m</span>
-    <span>ICT Machine V0.99</span>
+<div class="chart-wrapper">
+  <div class="chart-container">
+    <div class="chart-header">
+      <span>EURGBP · 15m · OANDA</span>
+      <span style="color: var(--cyan)">● ICT Machine V0.99</span>
+    </div>
+    <svg class="chart-svg" viewBox="0 0 1000 400" preserveAspectRatio="none">
+      <defs>
+        <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+          <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        </pattern>
+        <linearGradient id="fvgRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(239, 68, 68, 0.2)"/>
+          <stop offset="100%" stop-color="rgba(239, 68, 68, 0.05)"/>
+        </linearGradient>
+        <linearGradient id="fvgGreen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(16, 185, 129, 0.2)"/>
+          <stop offset="100%" stop-color="rgba(16, 185, 129, 0.05)"/>
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" />
+      
+      <!-- BSL / SSL Lines -->
+      <line x1="0" y1="80" x2="1000" y2="80" stroke="#F8FAFC" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+      <text x="10" y="75" fill="#F8FAFC" font-family="monospace" font-size="12" opacity="0.5">+ BSL (Buy Side Liquidity)</text>
+      
+      <line x1="0" y1="320" x2="1000" y2="320" stroke="#EF4444" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+      <text x="10" y="315" fill="#EF4444" font-family="monospace" font-size="12" opacity="0.5">- SSL (Sell Side Liquidity)</text>
+
+      <!-- FVG Boxes -->
+      <rect x="200" y="180" width="120" height="40" fill="url(#fvgRed)" stroke="#EF4444" stroke-width="1" stroke-dasharray="2,2"/>
+      <text x="205" y="205" fill="#EF4444" font-family="monospace" font-size="12" font-weight="bold">- FVG</text>
+      
+      <rect x="550" y="120" width="150" height="50" fill="url(#fvgGreen)" stroke="#10B981" stroke-width="1" stroke-dasharray="2,2"/>
+      <text x="555" y="150" fill="#10B981" font-family="monospace" font-size="12" font-weight="bold">+ FVG</text>
+
+      <!-- Structure Lines -->
+      <line x1="100" y1="150" x2="400" y2="150" stroke="#F8FAFC" stroke-width="1"/>
+      <text x="405" y="155" fill="#F8FAFC" font-family="monospace" font-size="12" font-weight="bold">+ BOS</text>
+
+      <line x1="500" y1="250" x2="800" y2="250" stroke="#8B5CF6" stroke-width="1"/>
+      <text x="805" y="255" fill="#8B5CF6" font-family="monospace" font-size="12" font-weight="bold">- MSS</text>
+
+      <!-- Candlesticks (Green & Red) -->
+      <g stroke-width="2">
+        <!-- Bullish Run -->
+        <line x1="50" y1="200" x2="50" y2="260" stroke="#10B981"/>
+        <rect x="42" y="210" width="16" height="40" fill="#10B981"/>
+        
+        <line x1="80" y1="180" x2="80" y2="240" stroke="#10B981"/>
+        <rect x="72" y="190" width="16" height="40" fill="#10B981"/>
+        
+        <!-- Bearish Drop -->
+        <line x1="110" y1="150" x2="110" y2="220" stroke="#EF4444"/>
+        <rect x="102" y="160" width="16" height="50" fill="#EF4444"/>
+        
+        <line x1="140" y1="140" x2="140" y2="200" stroke="#EF4444"/>
+        <rect x="132" y="150" width="16" height="40" fill="#EF4444"/>
+
+        <!-- Consolidation -->
+        <line x1="170" y1="180" x2="170" y2="230" stroke="#10B981"/>
+        <rect x="162" y="190" width="16" height="30" fill="#10B981"/>
+        
+        <line x1="200" y1="190" x2="200" y2="250" stroke="#EF4444"/>
+        <rect x="192" y="200" width="16" height="40" fill="#EF4444"/>
+
+        <line x1="230" y1="170" x2="230" y2="240" stroke="#EF4444"/>
+        <rect x="222" y="180" width="16" height="50" fill="#EF4444"/>
+        
+        <!-- Breakout -->
+        <line x1="260" y1="120" x2="260" y2="200" stroke="#10B981"/>
+        <rect x="252" y="130" width="16" height="60" fill="#10B981"/>
+
+        <line x1="290" y1="100" x2="290" y2="160" stroke="#10B981"/>
+        <rect x="282" y="110" width="16" height="40" fill="#10B981"/>
+
+        <line x1="320" y1="110" x2="320" y2="180" stroke="#EF4444"/>
+        <rect x="312" y="120" width="16" height="50" fill="#EF4444"/>
+        
+        <!-- More candles extending to right -->
+        <line x1="380" y1="130" x2="380" y2="200" stroke="#10B981"/>
+        <rect x="372" y="140" width="16" height="50" fill="#10B981"/>
+        
+        <line x1="410" y1="150" x2="410" y2="220" stroke="#EF4444"/>
+        <rect x="402" y="160" width="16" height="50" fill="#EF4444"/>
+
+        <line x1="480" y1="180" x2="480" y2="260" stroke="#EF4444"/>
+        <rect x="472" y="190" width="16" height="60" fill="#EF4444"/>
+
+        <line x1="510" y1="200" x2="510" y2="280" stroke="#EF4444"/>
+        <rect x="502" y="210" width="16" height="60" fill="#EF4444"/>
+
+        <line x1="540" y1="160" x2="540" y2="250" stroke="#10B981"/>
+        <rect x="532" y="170" width="16" height="70" fill="#10B981"/>
+
+        <line x1="600" y1="130" x2="600" y2="200" stroke="#10B981"/>
+        <rect x="592" y="140" width="16" height="50" fill="#10B981"/>
+
+        <line x1="630" y1="110" x2="630" y2="180" stroke="#10B981"/>
+        <rect x="622" y="120" width="16" height="50" fill="#10B981"/>
+
+        <line x1="660" y1="100" x2="660" y2="160" stroke="#10B981"/>
+        <rect x="652" y="110" width="16" height="40" fill="#10B981"/>
+
+        <line x1="700" y1="120" x2="700" y2="200" stroke="#EF4444"/>
+        <rect x="692" y="130" width="16" height="60" fill="#EF4444"/>
+
+        <line x1="730" y1="160" x2="730" y2="240" stroke="#EF4444"/>
+        <rect x="722" y="170" width="16" height="60" fill="#EF4444"/>
+
+        <line x1="760" y1="190" x2="760" y2="270" stroke="#10B981"/>
+        <rect x="752" y="200" width="16" height="60" fill="#10B981"/>
+
+        <line x1="800" y1="170" x2="800" y2="250" stroke="#EF4444"/>
+        <rect x="792" y="180" width="16" height="60" fill="#EF4444"/>
+
+        <line x1="850" y1="150" x2="850" y2="220" stroke="#EF4444"/>
+        <rect x="842" y="160" width="16" height="50" fill="#EF4444"/>
+        
+        <line x1="900" y1="140" x2="900" y2="210" stroke="#10B981"/>
+        <rect x="892" y="150" width="16" height="50" fill="#10B981"/>
+      </g>
+    </svg>
   </div>
-  <!-- Simulated Candlestick Chart -->
-  <svg class="chart-svg" viewBox="0 0 800 300" preserveAspectRatio="none">
-    <defs>
-      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#27272a" stroke-width="0.5"/>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#grid)" />
-    
-    <!-- FVG Boxes -->
-    <rect x="250" y="120" width="150" height="30" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="1" stroke-dasharray="2,2"/>
-    <rect x="450" y="80" width="120" height="40" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="1" stroke-dasharray="2,2"/>
-    
-    <!-- Candles (simulated) -->
-    <g stroke-width="1.5">
-      <!-- Green Candle -->
-      <line x1="100" y1="150" x2="100" y2="220" stroke="#10b981"/>
-      <rect x="95" y="160" width="10" height="50" fill="#10b981"/>
-      <!-- Red Candle -->
-      <line x1="120" y1="140" x2="120" y2="210" stroke="#ef4444"/>
-      <rect x="115" y="150" width="10" height="40" fill="#ef4444"/>
-      <!-- Green Candle -->
-      <line x1="140" y1="120" x2="140" y2="190" stroke="#10b981"/>
-      <rect x="135" y="130" width="10" height="50" fill="#10b981"/>
-      <!-- Red Candle big drop -->
-      <line x1="160" y1="100" x2="160" y2="200" stroke="#ef4444"/>
-      <rect x="155" y="110" width="10" height="80" fill="#ef4444"/>
-      <!-- BOS Line -->
-      <line x1="80" y1="110" x2="220" y2="110" stroke="#fff" stroke-width="1"/>
-      <text x="225" y="115" fill="#fff" font-size="10" font-family="monospace">+BOS</text>
-      
-      <!-- More candles -->
-      <line x1="200" y1="180" x2="200" y2="250" stroke="#ef4444"/>
-      <rect x="195" y="190" width="10" height="40" fill="#ef4444"/>
-      <line x1="220" y1="200" x2="220" y2="280" stroke="#ef4444"/>
-      <rect x="215" y="210" width="10" height="60" fill="#ef4444"/>
-      <line x1="240" y1="150" x2="240" y2="230" stroke="#10b981"/>
-      <rect x="235" y="160" width="10" height="60" fill="#10b981"/>
-      
-      <!-- MSS Line -->
-      <line x1="180" y1="170" x2="300" y2="170" stroke="#3b82f6" stroke-width="1"/>
-      <text x="305" y="175" fill="#3b82f6" font-size="10" font-family="monospace">-MSS</text>
-    </g>
-  </svg>
 </div>
 
 <section class="features" id="features">
-  <div class="features-grid">
-    <div class="feature">
-      <div class="feature-icon">🎯</div>
-      <h3>Automated FVGs</h3>
-      <p>Instantly highlights Fair Value Gaps across all timeframes. Never miss an imbalance again.</p>
+  <div class="section-title">
+    <h2>Engineered for the 1%</h2>
+    <p>Everything you need to map institutional order flow, without the manual drawing.</p>
+  </div>
+  <div class="bento-grid">
+    <div class="bento-card large">
+      <div class="bento-icon">🧠</div>
+      <h3>Smart Money Concepts Engine</h3>
+      <p>Our proprietary algorithm tracks Market Structure Shifts (MSS) and Breaks of Structure (BOS) across every timeframe. It knows exactly when the trend has flipped before the retail crowd does.</p>
     </div>
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <h3>Real-Time Alerts</h3>
-      <p>Get push notifications the second a Market Structure Shift (MSS) or Break of Structure (BOS) occurs.</p>
+    <div class="bento-card">
+      <div class="bento-icon">🎯</div>
+      <h3>Fair Value Gaps (FVG)</h3>
+      <p>Automatically plots imbalances (FVGs) and tracks them until they are mitigated. Never miss a high-probability entry zone again.</p>
     </div>
-    <div class="feature">
-      <div class="feature-icon">💧</div>
-      <h3>Liquidity Mapping</h3>
-      <p>Automatically plots Buy-Side (BSL) and Sell-Side (SSL) liquidity pools so you know where the stop hunts will happen.</p>
+    <div class="bento-card">
+      <div class="bento-icon">💧</div>
+      <h3>Liquidity Pools</h3>
+      <p>Maps Buy-Side (BSL) and Sell-Side (SSL) liquidity. Know exactly where the algorithmic stop hunts will occur.</p>
     </div>
-    <div class="feature">
-      <div class="feature-icon">📈</div>
-      <h3>Multi-Timeframe</h3>
-      <p>Seamlessly switch between 1m scalping and 4H swing trading without redrawing a single line.</p>
+    <div class="bento-card large">
+      <div class="bento-icon">🔔</div>
+      <h3>Real-Time Webhook Alerts</h3>
+      <p>Send signals directly to your phone, Telegram, or Discord the instant a setup occurs. Fully compatible with auto-trading bots like PineConnector.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="pricing">
+  <div class="section-title">
+    <h2>Choose Your Edge</h2>
+    <p>Start with a 7-day free trial. Cancel anytime.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Starter</h3>
+      <div class="price">$29<span>/mo</span></div>
+      <ul>
+        <li>Access to TradingView Indicator</li>
+        <li>Basic FVG & MSS detection</li>
+        <li>1 Device</li>
+      </ul>
+      <a href="#" class="price-btn">Start Free Trial</a>
+    </div>
+    
+    <div class="price-card featured">
+      <div class="popular-tag">MOST POPULAR</div>
+      <h3>Pro Trader</h3>
+      <div class="price">$79<span>/mo</span></div>
+      <ul>
+        <li>Everything in Starter</li>
+        <li>Multi-Timeframe Analysis</li>
+        <li>Real-Time Webhook Alerts</li>
+        <li>Telegram Support Group</li>
+      </ul>
+      <a href="#" class="price-btn">Start Free Trial</a>
+    </div>
+
+    <div class="price-card">
+      <h3>Lifetime</h3>
+      <div class="price">$499<span>/once</span></div>
+      <ul>
+        <li>Everything in Pro Trader</li>
+        <li>Lifetime Updates</li>
+        <li>No Monthly Fees</li>
+        <li>1-on-1 Onboarding Call</li>
+      </ul>
+      <a href="#" class="price-btn">Get Lifetime Access</a>
     </div>
   </div>
 </section>
 
 <footer>
-  &copy; 2026 The ICT Machine. Trading involves risk.
+  &copy; 2026 The ICT Machine. Trading involves risk. Past performance is not indicative of future results.
 </footer>
 
 </body>
