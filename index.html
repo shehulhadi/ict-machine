@@ -92,6 +92,17 @@ footer { text-align: center; padding: 40px; border-top: 1px solid var(--border);
   .bento-card.large, .bento-card.full { grid-column: span 1; }
   .chart-svg { height: 300px; }
 }
+
+/* FAQ Section */
+.faq-section { padding: 100px 5%; max-width: 800px; margin: 0 auto; }
+.faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; transition: 0.3s; }
+.faq-item:hover { border-color: var(--border-glow); }
+.faq-question { padding: 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; color: var(--text); list-style: none; }
+.faq-question::-webkit-details-marker { display: none; }
+.faq-question::after { content: "+"; color: var(--cyan); font-size: 1.5rem; font-weight: 400; transition: 0.3s; }
+.faq-item[open] .faq-question::after { transform: rotate(45deg); }
+.faq-answer { padding: 0 24px 24px; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+
 </style>
 
   <!-- SEO & Social Sharing -->
